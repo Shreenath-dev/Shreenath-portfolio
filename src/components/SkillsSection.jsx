@@ -48,7 +48,7 @@ const skills = [
   { name: "MongoDB", category: "backend", icon: <SiMongodb /> },
   { name: "PostgreSQL", category: "backend", icon: <SiPostgresql /> },
   { name: "ElasticSearch", category: "backend", icon: <SiElasticsearch /> },
-    { name: "MicroService Arch", category: "backend", icon: <HiOutlineServer /> },
+    { name: "MicroService Architecture", category: "backend", icon: <HiOutlineServer /> },
 
 
   // Tools
