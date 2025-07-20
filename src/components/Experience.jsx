@@ -6,7 +6,7 @@ const experience = [
   {
     title: "Software Associate",
     company: "Scottech Solutions",
-    duration: "May 2025 – Aug 2025",
+    duration: "May 2025 – Jul 2025",
     description:
       "Architected and delivered backend services using FastAPI and PostgreSQL for a cloud-based logistics platform. Automated deployment using Docker and GitHub Actions, ensuring zero-downtime rollouts and rapid iteration cycles.",
   },
@@ -15,7 +15,7 @@ const experience = [
     company: "SNS Square Consultancy Services",
     duration: "Aug 2024 – May 2025",
     description:
-      "Developed scalable APIs for AI-powered semantic search and recommendations. Introduced vector search with OpenSearch and sentence-transformers, significantly improving query relevance. Led backend architecture decisions across multiple internal tools.",
+      "Designed and built scalable, production-grade backend systems integrating AI capabilities. Developed ML models, leveraging sentence-transformers and OpenSearch for semantic search and recommender system. Led backend architecture decisions across internal platforms, ensuring performance and reliability. Acted as Product Owner, driving development through strong Agile practices and cross-functional collaboration.",
   },
   {
     title: "Software Associate Intern",
