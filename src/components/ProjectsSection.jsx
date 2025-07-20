@@ -11,7 +11,7 @@ const projects = [
     description: "Square MedMatch is a platform that connects healthcare professionals with healthcare providers.",
     image: MM,
     tags: "Live",
-    demoUrl: "https://www.squaremedmatch.com/",
+    demoUrl: "https://medmatch.snssquare.team/",
     githubUrl: " ",
   },
   {
