@@ -27,15 +27,18 @@ export const AboutSection = () => {
             </h3>
 
             <p className="text-muted-foreground">
-              I'm a software associate experienced in building scalable backend systems and
-              intelligent AI models for real-world applications. I've worked on robust backend system, microservice architecture, semantic search,
-              recommendation systems, and GenAI features for production-ready systems.
+              I'm a software associate experienced in building scalable backend
+              systems and intelligent AI models for real-world applications.
+              I've worked on robust backend system, microservice architecture,
+              semantic search, recommendation systems, and GenAI features for
+              production-ready systems.
             </p>
 
             <p className="text-muted-foreground">
-              With hands-on experience across the stack—FastAPI, Python, MERN, and cloud-native
-              deployments on AWS—I love crafting robust, meaningful solutions. I also drive feature
-              delivery as a product owner and focus on user impact through AI-powered backend logic.
+              With hands-on experience across the stack—FastAPI, Python, MERN,
+              and cloud-native deployments on AWS—I love crafting robust,
+              meaningful solutions. I also drive feature delivery as a product
+              owner and focus on user impact through AI-powered backend logic.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
@@ -43,7 +46,7 @@ export const AboutSection = () => {
                 Get In Touch
               </a>
               <a
-                href="https://drive.google.com/file/d/1jxpokD9PaVSOcxlrOD3PK9drYeXg5OjK/view?usp=drive_link"
+                href="https://drive.google.com/drive/folders/1Lo1B0UmdD30a6Adv5WFzFPbSQePs_EFN?usp=sharing"
                 download
                 className="px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/10 transition-colors duration-300"
               >
@@ -58,22 +61,26 @@ export const AboutSection = () => {
             whileInView="visible"
             transition={{ staggerChildren: 0.2 }}
           >
-            {[{
-              Icon: BrainCircuit,
-              title: "AI & Backend Systems",
-              description:
-                "Building intelligent systems using FastAPI, Python, and deep learning models for recommendation and semantic search."
-            }, {
-              Icon: Cloud,
-              title: "Cloud & DevOps",
-              description:
-                "Deploying cloud-native apps using AWS, Docker, Kubernetes, and MLOps tools for scalable AI delivery."
-            }, {
-              Icon: Briefcase,
-              title: "Product Ownership",
-              description:
-                "Led product features end-to-end, balancing technical delivery and user-focused outcomes with agile best practices."
-            }].map(({ Icon, title, description }, idx) => (
+            {[
+              {
+                Icon: BrainCircuit,
+                title: "AI & Backend Systems",
+                description:
+                  "Building intelligent systems using FastAPI, Python, and deep learning models for recommendation and semantic search.",
+              },
+              {
+                Icon: Cloud,
+                title: "Cloud & DevOps",
+                description:
+                  "Deploying cloud-native apps using AWS, Docker, Kubernetes, and MLOps tools for scalable AI delivery.",
+              },
+              {
+                Icon: Briefcase,
+                title: "Product Ownership",
+                description:
+                  "Led product features end-to-end, balancing technical delivery and user-focused outcomes with agile best practices.",
+              },
+            ].map(({ Icon, title, description }, idx) => (
               <motion.div
                 key={idx}
                 className="gradient-border p-6 card-hover backdrop-blur"
@@ -86,7 +93,9 @@ export const AboutSection = () => {
                     <Icon className="h-6 w-6 text-primary" />
                   </div>
                   <div className="text-left">
-                    <h4 className="font-semibold text-lg text-white">{title}</h4>
+                    <h4 className="font-semibold text-lg text-white">
+                      {title}
+                    </h4>
                     <p className="text-muted-foreground">{description}</p>
                   </div>
                 </div>
