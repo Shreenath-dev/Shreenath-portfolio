@@ -30,7 +30,7 @@ export const Home = () => {
       </main>
 
       {/* Footer */}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

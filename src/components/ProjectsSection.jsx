@@ -1,34 +1,38 @@
 import { ArrowRight, ExternalLink, Github } from "lucide-react";
+import MM from "../assets/mm.png"
+import MME from "../assets/ChatGPT Image Jul 21, 2025, 12_46_30 AM.png"
+import Tracker from "../assets/tracker.png"
+
 
 const projects = [
   {
     id: 1,
-    title: "SaaS Landing Page",
-    description: "A beautiful landing page app using React and Tailwind.",
-    image: "/projects/project1.png",
-    tags: ["React", "TailwindCSS", "Supabase"],
-    demoUrl: "#",
-    githubUrl: "#",
+    title: "Square MedMatch",
+    description: "Square MedMatch is a platform that connects healthcare professionals with healthcare providers.",
+    image: MM,
+    tags: "Live",
+    demoUrl: "https://www.squaremedmatch.com/",
+    githubUrl: " ",
   },
   {
     id: 2,
-    title: "Orbit Analytics Dashboard",
+    title: "MedMatch Entreprise",
     description:
-      "Interactive analytics dashboard with data visualization and filtering capabilities.",
-    image: "/projects/project2.png",
-    tags: ["TypeScript", "D3.js", "Next.js"],
-    demoUrl: "#",
-    githubUrl: "#",
+      "MedMatch Enterprise is a B2B platform for AI-driven healthcare hiring and candidate screening.",
+    image: MME,
+    tags: ["TypeScript", "Next.js"],
+    demoUrl: " ",
+    githubUrl: " ",
   },
   {
     id: 3,
-    title: "E-commerce Platform",
+    title: "Square Tracker",
     description:
-      "Full-featured e-commerce platform with user authentication and payment processing.",
-    image: "/projects/project3.png",
-    tags: ["React", "Node.js", "Stripe"],
-    demoUrl: "#",
-    githubUrl: "#",
+      "Streamline bug tracking and ticket management with a centralized, efficient, and user-friendly platform.",
+    image: Tracker,
+    tags: ["React", "Node.js", "MongoDB"],
+    demoUrl: " ",
+    githubUrl: " ",
   },
 ];
 
@@ -62,7 +66,13 @@ export const ProjectsSection = () => {
 
               <div className="p-6">
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.map((tag) => (
+                  {project.tags === 'Live' ? 
+                    
+                    <span className="px-2 py-1 text-xs font-medium border font- text-red-600 animate-pulse border-red-700 rounded-full bg-secondary text-secondary-foreground">
+                      {project.tags}
+                    </span>
+                  :project.tags.map((tag) => (
+                    
                     <span className="px-2 py-1 text-xs font-medium border rounded-full bg-secondary text-secondary-foreground">
                       {tag}
                     </span>
@@ -75,20 +85,22 @@ export const ProjectsSection = () => {
                 </p>
                 <div className="flex justify-between items-center">
                   <div className="flex space-x-3">
-                    <a
+                    {project.demoUrl!==' '?<a
                       href={project.demoUrl}
                       target="_blank"
                       className="text-foreground/80 hover:text-primary transition-colors duration-300"
                     >
                       <ExternalLink size={20} />
-                    </a>
-                    <a
+                    </a>:' '}
+                    {project.githubUrl!==' '?<a
                       href={project.githubUrl}
                       target="_blank"
                       className="text-foreground/80 hover:text-primary transition-colors duration-300"
                     >
                       <Github size={20} />
-                    </a>
+                    </a>:<span className="px-2 py-1 text-xs font-medium border rounded-full bg-secondary text-secondary-foreground">
+                      <a href="https://www.snssquare.com/">SNS Square Product</a>
+                    </span>}
                   </div>
                 </div>
               </div>
@@ -100,7 +112,7 @@ export const ProjectsSection = () => {
           <a
             className="cosmic-button w-fit flex items-center mx-auto gap-2"
             target="_blank"
-            href="https://github.com/machadop1407"
+            href="https://github.com/Shreenath-dev"
           >
             Check My Github <ArrowRight size={16} />
           </a>

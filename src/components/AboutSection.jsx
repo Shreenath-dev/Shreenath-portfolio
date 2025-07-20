@@ -28,12 +28,12 @@ export const AboutSection = () => {
 
             <p className="text-muted-foreground">
               I'm a software associate experienced in building scalable backend systems and
-              intelligent AI models for real-world applications. I've worked on semantic search,
+              intelligent AI models for real-world applications. I've worked on robust backend system, microservice architecture, semantic search,
               recommendation systems, and GenAI features for production-ready systems.
             </p>
 
             <p className="text-muted-foreground">
-              With hands-on experience across the stack—FastAPI, Python, React, and cloud-native
+              With hands-on experience across the stack—FastAPI, Python, MERN, and cloud-native
               deployments on AWS—I love crafting robust, meaningful solutions. I also drive feature
               delivery as a product owner and focus on user impact through AI-powered backend logic.
             </p>
@@ -43,7 +43,7 @@ export const AboutSection = () => {
                 Get In Touch
               </a>
               <a
-                href="/Shreenath_Resume.pdf"
+                href="https://drive.google.com/file/d/1jxpokD9PaVSOcxlrOD3PK9drYeXg5OjK/view?usp=drive_link"
                 download
                 className="px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/10 transition-colors duration-300"
               >
