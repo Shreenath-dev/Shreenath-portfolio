@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { motion, useTransform, useScroll, useSpring } from "motion/react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Scene3D } from "./Scene3D";
 
 const experience = [
   {
@@ -27,152 +28,73 @@ const experience = [
 ];
 
 export const Timeline = () => {
-  const ref = useRef(null);
-  const contentRef = useRef(null);
-  const [svgHeight, setSvgHeight] = useState(0);
-  const [glowIndex, setGlowIndex] = useState(-1);
-
+  const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
+    target: containerRef,
+    offset: ["start end", "end start"],
   });
 
-  const rawBeam = useTransform(scrollYProgress, [0, 1], [0, svgHeight]);
-  const beamY = useSpring(rawBeam, {
-    stiffness: 200,
-    damping: 40,
-  });
-  const beamOffset = useTransform(rawBeam, (y) => svgHeight - y);
-
-  useEffect(() => {
-    if (contentRef.current) {
-      setSvgHeight(contentRef.current.offsetHeight);
-    }
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = beamY.on("change", (latest) => {
-      const threshold = 20;
-      experience.forEach((_, idx) => {
-        const y = 80 + idx * 180;
-        if (latest >= y - threshold && latest <= y + threshold) {
-          setGlowIndex(idx);
-        }
-      });
-    });
-    return () => unsubscribe();
-  }, [beamY]);
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const yScene = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
   return (
-    <section id="experience" className="py-24 px-4 relative">
-      <div className="container mx-auto max-w-4xl">
+    <section id="experience" className="py-24 px-4 relative overflow-hidden" ref={containerRef}>
+      <motion.div
+        style={{ y: yScene }}
+        className="absolute inset-0 z-0 opacity-40 pointer-events-none"
+      >
+        <Scene3D />
+      </motion.div>
+
+      <div className="container mx-auto max-w-5xl relative z-10">
         <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center">
           Experience <span className="text-primary">Timeline</span>
         </h2>
 
-        <motion.div
-          ref={ref}
-          className="relative mx-auto h-full w-full max-w-4xl"
-        >
-          <div className="absolute top-0 -left-4 md:-left-20">
-            <svg
-              viewBox={`0 0 20 ${svgHeight}`}
-              width="20"
-              height={svgHeight}
-              className="ml-4 block"
-              aria-hidden="true"
-            >
-              <motion.path
-                d={`M 10 0 V ${svgHeight}`}
-                fill="none"
-                stroke="#9091A0"
-                strokeOpacity="0.16"
-              />
-              <motion.path
-                d={`M 10 0 V ${svgHeight}`}
-                fill="none"
-                stroke="url(#timelineGradient)"
-                strokeWidth="1.5"
-                style={{
-                  strokeDasharray: svgHeight,
-                  strokeDashoffset: beamOffset,
-                }}
-              />
-              <defs>
-                <linearGradient
-                  id="timelineGradient"
-                  x1="0"
-                  x2="0"
-                  y1="0"
-                  y2="1"
-                >
-                  <stop offset="0%" stopColor="#18CCFC" stopOpacity="0.1" />
-                  <stop offset="50%" stopColor="#6344F5" stopOpacity="1" />
-                  <stop offset="100%" stopColor="#AE48FF" stopOpacity="0.1" />
-                </linearGradient>
-              </defs>
+        <div className="relative mx-auto max-w-3xl">
+          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-border transform md:-translate-x-1/2 rounded-full" />
 
-              {experience.map((_, idx) => {
-                const y = 80 + idx * 180;
-                const isGlowing = glowIndex === idx;
+          <motion.div
+            style={{ height: lineHeight }}
+            className="absolute left-8 md:left-1/2 top-0 w-0.5 bg-gradient-to-b from-primary via-purple-500 to-blue-500 transform md:-translate-x-1/2 origin-top rounded-full shadow-[0_0_10px_2px_rgba(168,85,247,0.5)]"
+          />
 
-                return (
-                  <motion.circle
-                    key={idx}
-                    cx="10"
-                    cy={y}
-                    r={isGlowing ? 8 : 6}
-                    fill="white"
-                    stroke="#A855F7"
-                    strokeWidth="2"
-                    animate={isGlowing ? { scale: [1, 1.2, 1] } : { scale: 1 }}
-                    transition={
-                      isGlowing
-                        ? {
-                            duration: 1,
-                            repeat: Infinity,
-                            repeatType: "loop",
-                            ease: "easeInOut",
-                          }
-                        : {}
-                    }
-                    style={{
-                      filter: isGlowing
-                        ? "drop-shadow(0 0 10px #A855F7) brightness(1.5)"
-                        : "none",
-                    }}
-                  />
-                );
-              })}
-            </svg>
-          </div>
-
-          <div ref={contentRef} className="pl-14 md:pl-20">
+          <div className="space-y-12">
             {experience.map((item, idx) => (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.7, delay: idx * 0.25 }}
-                viewport={{ once: true }}
-                className="relative mb-16 flex items-start gap-6 md:gap-8"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                className={`relative flex flex-col md:flex-row gap-8 md:gap-0 ${idx % 2 === 0 ? "md:flex-row-reverse" : ""
+                  }`}
               >
-                <div className="bg-card/70 backdrop-blur-xl border border-border p-6 rounded-2xl shadow-xl w-full text-left">
-                  <h3 className="text-xl font-semibold text-primary mb-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm mb-2">
-                    {item.company} |{" "}
-                    <span className="italic">{item.duration}</span>
-                  </p>
-                  <p className="text-foreground leading-relaxed">
-                    {item.description}
-                  </p>
+                <div className="absolute left-8 md:left-1/2 top-0 w-4 h-4 rounded-full bg-background border-2 border-primary transform -translate-x-1/2 md:translate-x-[-50%] z-20 shadow-[0_0_10px_rgba(168,85,247,0.8)] mt-6 md:mt-0">
+                  <div className="absolute inset-0 rounded-full bg-primary animate-ping opacity-20" />
                 </div>
+
+                <div className="w-full md:w-1/2 pl-20 md:pl-0 md:px-12">
+                  <div
+                    className={`bg-card/40 backdrop-blur-md border border-white/10 p-6 rounded-2xl shadow-xl transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)] group`}
+                  >
+                    <h3 className="text-xl font-bold text-white mb-1 group-hover:text-primary transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-primary/80 font-medium text-sm mb-3">
+                      {item.company} <span className="text-neutral-500 px-2">•</span> {item.duration}
+                    </p>
+                    <p className="text-neutral-300 leading-relaxed text-sm">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="hidden md:block w-1/2" />
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

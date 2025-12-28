@@ -18,18 +18,24 @@
   --animate-meteor: meteor 5s linear infinite;
 
   @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
       transform: translateY(0);
     }
+
     50% {
       transform: translateY(-10px);
     }
   }
 
   @keyframes pulse-subtle {
-    0%, 100% {
+
+    0%,
+    100% {
       opacity: 1;
     }
+
     50% {
       opacity: 0.8;
     }
@@ -40,6 +46,7 @@
       opacity: 0;
       transform: translateY(20px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -51,9 +58,11 @@
       transform: rotate(215deg) translateX(0);
       opacity: 1;
     }
+
     70% {
       opacity: 1;
     }
+
     100% {
       transform: rotate(215deg) translateX(-500px);
       opacity: 0;
@@ -90,19 +99,23 @@
   margin-inline: auto;
   padding-inline: 2rem;
 
-  @media (width >= 640px) {
+  @media (width >=640px) {
     max-width: 640px;
   }
-  @media (width >= 768px) {
+
+  @media (width >=768px) {
     max-width: 768px;
   }
-  @media (width >= 1024px) {
+
+  @media (width >=1024px) {
     max-width: 1024px;
   }
-  @media (width >= 1280px) {
+
+  @media (width >=1280px) {
     max-width: 1280px;
   }
-  @media (width >= 1400px) {
+
+  @media (width >=1400px) {
     max-width: 1400px;
   }
 }
@@ -124,9 +137,11 @@
 }
 
 @utility cosmic-button {
-  @apply px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium 
-         transition-all duration-300 hover:shadow-[0_0_10px_rgba(139,92,246,0.5)]
-         hover:scale-105 active:scale-95;
+  @apply px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium transition-all duration-300 hover:scale-105 active:scale-95;
+
+  &:hover {
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+  }
 }
 
 @utility star {
@@ -147,10 +162,13 @@
 }
 
 @keyframes twinkle {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.3;
     transform: scale(1);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.2);
@@ -162,9 +180,11 @@
     transform: translate(0, 0) rotate(45deg);
     opacity: 0;
   }
+
   10% {
     opacity: 1;
   }
+
   100% {
     transform: translate(600px, 800px) rotate(45deg);
     opacity: 0;
