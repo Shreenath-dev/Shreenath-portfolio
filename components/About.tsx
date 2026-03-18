@@ -6,7 +6,6 @@ export default function About() {
       <RevealObserver threshold={0.15} />
       <div className="max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-[1fr_1.2fr] gap-20 items-start">
-          {/* Left */}
           <div>
             <div className="reveal flex items-center gap-3 mb-6">
               <span className="section-num">01</span>
