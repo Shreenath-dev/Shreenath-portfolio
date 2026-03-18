@@ -2,89 +2,80 @@
 
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Environment, Text } from "@react-three/drei";
-import { useRef, Suspense, useState, useEffect } from "react";
+import { useRef, Suspense, useState } from "react";
 import * as THREE from "three";
 
 /* ─────────────────────────────────────────────
-   PROCEDURAL IRON MAN BODY (Assembles on Unlock)
+   ALIEN DRONE SHIP (Extraterrestrial Saucer)
    ───────────────────────────────────────────── */
-function ProceduralBody({ unlocked }: { unlocked: boolean }) {
-  const bodyGroupRef = useRef<THREE.Group>(null);
+function AlienSaucer({ unlocked, saucerRef }: { unlocked: boolean, saucerRef: React.RefObject<THREE.Group> }) {
   
-  useFrame((state) => {
-    if (bodyGroupRef.current) {
-      // Body materializes out of the head when unlocked
-      const targetScale = unlocked ? 1 : 0;
-      bodyGroupRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
+  useFrame(() => {
+    // Cinematic Alien Vessel Approach Algorithm
+    if (saucerRef.current) {
+      if (unlocked) {
+        const targetScale = 1;
+        // Saucer swoops in to anchor exactly 1.0 unit BELOW the drone head, creating a massive hovering gap
+        saucerRef.current.position.lerp(new THREE.Vector3(0, -1.0, 0), 0.08);
+        saucerRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
+      } else {
+        const targetScale = 0;
+        // Saucer evacuates and vanishes into deep space at supersonic speed
+        saucerRef.current.position.lerp(new THREE.Vector3(8, 15, -25), 0.08);
+        saucerRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.15);
+      }
     }
   });
 
   return (
-    <group ref={bodyGroupRef} position={[0, -0.65, 0]}>
-      {/* 1. Torso / Core Armor */}
-      <mesh castShadow position={[0, -0.1, 0]}>
-        <capsuleGeometry args={[0.25, 0.45, 16, 16]} />
-        <meshStandardMaterial color="#e0e0e0" metalness={0.6} roughness={0.2} />
+    <group ref={saucerRef} position={[8, 15, -25]} scale={[0, 0, 0]}>
+      {/* 1. Main Obsidian Hull (Now extremely wide and completely detached from the drone head) */}
+      <mesh castShadow>
+        <cylinderGeometry args={[0.9, 0.7, 0.15, 32]} />
+        <meshStandardMaterial color="#111111" metalness={1.0} roughness={0.1} />
+      </mesh>
+      
+      {/* 2. Sloped Alien Underbelly */}
+      <mesh position={[0, -0.05, 0]}>
+        <cylinderGeometry args={[0.7, 0.2, 0.1, 32]} />
+        <meshStandardMaterial color="#050505" metalness={0.9} roughness={0.3} />
       </mesh>
 
-      {/* Arc Reactor Centerpiece */}
-      <mesh position={[0, 0.05, 0.25]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.08, 0.08, 0.05, 32]} />
-        <meshBasicMaterial color="#3a7bd5" />
-        <pointLight color="#3a7bd5" intensity={1.5} distance={3} />
+      {/* 3. Alien Plasma Reactor Ring (Deep Purple Glow) */}
+      <mesh position={[0, 0.0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[0.95, 0.02, 16, 64]} />
+        <meshBasicMaterial color="#9d4edd" />
+        <pointLight color="#9d4edd" intensity={3} distance={6} />
+      </mesh>
+      
+      {/* 4. Peripheral Nav Beacons (Toxic Green Outer Nodes) */}
+      {[...Array(6)].map((_, i) => (
+        <group key={i} rotation={[0, i * (Math.PI / 3), 0]}>
+          <mesh position={[0.85, 0.1, 0]}>
+            <sphereGeometry args={[0.03]} />
+            <meshBasicMaterial color="#00ffcc" />
+          </mesh>
+        </group>
+      ))}
+
+      {/* 5. Central Tractor Beam Emitter / Core Engine */}
+      <mesh position={[0, -0.1, 0]} rotation={[0, 0, Math.PI]}>
+        <sphereGeometry args={[0.2, 32, 16, 0, Math.PI * 2, 0, Math.PI/2]} />
+        <meshBasicMaterial color="#00ffcc" transparent opacity={0.8} />
+        <pointLight color="#00ffcc" intensity={2} distance={4} />
+      </mesh>
+      
+      {/* 6. MAGNETIC TRACTOR BEAM PILLAR (Bridges the 1.0 physical gap perfectly up to the Robot Head) */}
+      <mesh position={[0, 0.35, 0]}>
+        <cylinderGeometry args={[0.15, 0.35, 0.7, 32]} />
+        <meshBasicMaterial color="#00ffcc" transparent opacity={0.3} side={THREE.DoubleSide} />
       </mesh>
 
-      {/* 2. Shoulders & Arms (Sweeping backward for supersonic flight) */}
-      <group position={[-0.35, 0.1, -0.1]} rotation={[Math.PI / 3, 0, Math.PI / 8]}>
-        <mesh>
-          <capsuleGeometry args={[0.1, 0.4, 16, 16]} />
-          <meshStandardMaterial color="#1a1a1a" metalness={0.9} roughness={0.2} />
-        </mesh>
-        {/* Left Hand Repulsor Thruster */}
-        <mesh position={[0, -0.25, 0]}>
-          <sphereGeometry args={[0.08]} />
-          <meshBasicMaterial color="#3a7bd5" />
-        </mesh>
-      </group>
-
-      <group position={[0.35, 0.1, -0.1]} rotation={[Math.PI / 3, 0, -Math.PI / 8]}>
-        <mesh>
-          <capsuleGeometry args={[0.1, 0.4, 16, 16]} />
-          <meshStandardMaterial color="#1a1a1a" metalness={0.9} roughness={0.2} />
-        </mesh>
-        {/* Right Hand Repulsor Thruster */}
-        <mesh position={[0, -0.25, 0]}>
-          <sphereGeometry args={[0.08]} />
-          <meshBasicMaterial color="#3a7bd5" />
-        </mesh>
-      </group>
-
-      {/* 3. Jetpack / Boot Thrusters */}
-      <group position={[0, -0.4, -0.1]} rotation={[Math.PI / 12, 0, 0]}>
-        {/* Left Leg */}
-        <mesh position={[-0.15, -0.25, 0]}>
-          <capsuleGeometry args={[0.12, 0.4, 16, 16]} />
-          <meshStandardMaterial color="#e0e0e0" metalness={0.6} roughness={0.2} />
-          {/* Flame Nozzle */}
-          <mesh position={[0, -0.25, 0]}>
-            <cylinderGeometry args={[0.08, 0.12, 0.15, 16]} />
-            <meshBasicMaterial color="#f5a623" />
-            <pointLight color="#f5a623" intensity={2} distance={4} />
-          </mesh>
-        </mesh>
-        
-        {/* Right Leg */}
-        <mesh position={[0.15, -0.25, 0]}>
-          <capsuleGeometry args={[0.12, 0.4, 16, 16]} />
-          <meshStandardMaterial color="#e0e0e0" metalness={0.6} roughness={0.2} />
-          {/* Flame Nozzle */}
-          <mesh position={[0, -0.25, 0]}>
-            <cylinderGeometry args={[0.08, 0.12, 0.15, 16]} />
-            <meshBasicMaterial color="#f5a623" />
-            <pointLight color="#f5a623" intensity={2} distance={4} />
-          </mesh>
-        </mesh>
-      </group>
+      {/* 7. Docking Ring surface emitter */}
+      <mesh position={[0, 0.08, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[0.25, 0.05, 16, 32]} />
+        <meshBasicMaterial color="#00ffcc" />
+      </mesh>
     </group>
   );
 }
@@ -94,8 +85,10 @@ function ProceduralBody({ unlocked }: { unlocked: boolean }) {
    ───────────────────────────────────────────── */
 function AIRobotNode({ unlocked, initialPosition, onLock }: { unlocked: boolean, initialPosition: [number, number, number], onLock: () => void }) {
   const robotRef = useRef<THREE.Group>(null);
-  const innerRobotRef = useRef<THREE.Group>(null);
+  const headRef = useRef<THREE.Group>(null);
+  const neckRef = useRef<THREE.Group>(null);
   const eyePivotRef = useRef<THREE.Group>(null);
+  const saucerRef = useRef<THREE.Group>(null);
   const leftEarRef = useRef<THREE.Mesh>(null);
   const rightEarRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
@@ -108,60 +101,70 @@ function AIRobotNode({ unlocked, initialPosition, onLock }: { unlocked: boolean,
   useFrame((state) => {
     const t = state.clock.elapsedTime;
     
-    if (robotRef.current && innerRobotRef.current) {
-      if (!unlocked) {
-        // LOCKED STATE: Upright anchor orientation with gentle hover
-        robotRef.current.position.lerp(new THREE.Vector3(...initialPosition), 0.1);
+    // Smooth responsive anchor based on the page's native scroll
+    const isClient = typeof window !== "undefined";
+    const scY = isClient ? window.scrollY : 0;
+    const vH = isClient ? window.innerHeight : 1000;
+    const scrollOffset = (scY / vH) * state.viewport.height;
+    const currentAnchorY = initialPosition[1] + scrollOffset;
+
+    // --- SEQUENTIAL BOARDING LOGIC ---
+    let isBoarded = false;
+    if (unlocked && saucerRef.current) {
+      // Calculates mathematical distance to the new -1.0 offset (massive gap)
+      const dist = saucerRef.current.position.distanceTo(new THREE.Vector3(0, -1.0, 0));
+      if (dist < 0.1) isBoarded = true; // The ship has successfully positioned under the drone
+    }
+    
+    if (robotRef.current && headRef.current) {
+      // Physical Docking Animation (Drone drops slightly, locking purely into the Tractor beam gap)
+      const targetHeadY = isBoarded ? -0.15 : 0;
+      headRef.current.position.lerp(new THREE.Vector3(0, targetHeadY, 0), 0.15);
+      
+      // Withdraw physical neck logic entirely when airborne in the beam
+      if (neckRef.current) {
+        const neckScale = isBoarded ? 0 : 1;
+        neckRef.current.scale.lerp(new THREE.Vector3(neckScale, neckScale, neckScale), 0.15);
+      }
+
+      if (!unlocked || !isBoarded) {
+        // PHASE 1: Locked, or hovering eager for Ship Arrival
+        const targetAnchor = new THREE.Vector3(initialPosition[0], currentAnchorY, initialPosition[2]);
+        robotRef.current.position.lerp(targetAnchor, 0.1);
         robotRef.current.position.y += Math.sin(t * 2) * 0.002;
         
-        // Reset flight posture back to standing
-        innerRobotRef.current.rotation.x = THREE.MathUtils.lerp(innerRobotRef.current.rotation.x, 0, 0.1);
-        innerRobotRef.current.rotation.z = THREE.MathUtils.lerp(innerRobotRef.current.rotation.z, 0, 0.1);
+        robotRef.current.quaternion.slerp(new THREE.Quaternion(), 0.1);
 
-        lookAtTarget.current.set(initialPosition[0], initialPosition[1], 5);
-        robotRef.current.lookAt(lookAtTarget.current);
-        
-        robotRef.current.rotation.y += Math.sin(t * 0.8) * 0.2;
-        robotRef.current.rotation.x += Math.cos(t * 0.5) * 0.15;
+        lookAtTarget.current.set(initialPosition[0], currentAnchorY, 5);
+        headRef.current.lookAt(lookAtTarget.current);
+        headRef.current.rotation.y += Math.sin(t * 0.8) * 0.2;
+        headRef.current.rotation.x += Math.cos(t * 0.5) * 0.15;
       } else {
-        // FREEDOM STATE: Fluid Iron Man Flight 
-        
-        // Endless continuous flight algorithms spanning the Hero viewport
-        wanderTarget.current.x = Math.sin(t * 0.4) * 6; 
-        wanderTarget.current.y = Math.sin(t * 0.5) * 3 + Math.cos(t * 0.3) * 1.5; 
-        wanderTarget.current.z = Math.sin(t * 0.6) * 1.5; 
-        
-        // Velocity extraction for dynamic banking
-        const velocityX = wanderTarget.current.x - robotRef.current.position.x;
+        // PHASE 2: UFO Escape Flight
+        wanderTarget.current.x = Math.sin(t * 0.35) * 6; 
+        wanderTarget.current.y = Math.sin(t * 0.45) * 2.5 + Math.cos(t * 0.25) * 1.5; 
+        wanderTarget.current.z = Math.sin(t * 0.5) * 2 - 1; 
 
-        robotRef.current.position.lerp(wanderTarget.current, 0.02);
+        robotRef.current.position.lerp(wanderTarget.current, 0.015);
         
-        // Track the user cursor smoothly
+        // UFO Hover/Banking Dynamics (Disks lean gently)
+        const velocityX = wanderTarget.current.x - robotRef.current.position.x;
+        const velocityZ = wanderTarget.current.z - robotRef.current.position.z;
+        dummyObj.current.rotation.set(velocityZ * 0.15, 0, -velocityX * 0.15);
+        robotRef.current.quaternion.slerp(dummyObj.current.quaternion, 0.08);
+
+        // Independent "Owl" Tracking - Head stares at User cursor irrespective of Saucer banking
         const pointerX = (state.pointer.x * state.viewport.width) / 2;
         const pointerY = (state.pointer.y * state.viewport.height) / 2;
-        
-        // Placed firmly behind the camera so the Drone permanently looks directly AT the user
-        lookAtTarget.current.lerp(new THREE.Vector3(pointerX, pointerY, 8), 0.1);
-        
-        dummyObj.current.position.copy(robotRef.current.position);
-        dummyObj.current.lookAt(lookAtTarget.current);
-        robotRef.current.quaternion.slerp(dummyObj.current.quaternion, 0.05);
-
-        // FLIGHT POSTURE DYNAMICS
-        // Lean deeply forward into a horizontal flight posture
-        innerRobotRef.current.rotation.x = THREE.MathUtils.lerp(innerRobotRef.current.rotation.x, Math.PI / 3, 0.05);
-        // Bank / Barrel Roll dynamically left and right into corners based on X velocity
-        innerRobotRef.current.rotation.z = THREE.MathUtils.lerp(innerRobotRef.current.rotation.z, velocityX * 0.25, 0.05);
+        const userWorldPos = new THREE.Vector3(pointerX, pointerY, 8);
+        headRef.current.lookAt(userWorldPos);
       }
     }
 
-    // Visor Scanner
     if (eyePivotRef.current) {
       const scanSpeed = unlocked ? 6 : 3;
       eyePivotRef.current.rotation.y = Math.sin(t * scanSpeed) * 0.45;
     }
-
-    // Dynamic Antenna physics
     if (leftEarRef.current && rightEarRef.current) {
       leftEarRef.current.position.y = Math.cos(t * 2 + 1) * 0.06;
       rightEarRef.current.position.y = Math.cos(t * 2 + 2) * 0.06;
@@ -171,7 +174,7 @@ function AIRobotNode({ unlocked, initialPosition, onLock }: { unlocked: boolean,
   return (
     <group 
       ref={robotRef} 
-      scale={0.6} // Reduced scale down further
+      scale={0.65}
       onPointerDown={(e) => {
         if (unlocked) {
           e.stopPropagation();
@@ -193,9 +196,11 @@ function AIRobotNode({ unlocked, initialPosition, onLock }: { unlocked: boolean,
         }
       }}
     >
-      {/* Wrapper that handles the dynamic leaning flight posture without breaking mouse look tracking */}
-      <group ref={innerRobotRef}>
-        {/* === THE ROBOT HEAD MESHES === */}
+      {/* === THE ALIEN SHIP === */}
+      <AlienSaucer unlocked={unlocked} saucerRef={saucerRef} />
+
+      {/* === THE ROBOT HEAD === */}
+      <group ref={headRef}>
         <mesh castShadow>
           <sphereGeometry args={[0.5, 64, 64]} />
           <meshStandardMaterial color="#e0e0e0" metalness={0.3} roughness={0.2} envMapIntensity={1.5} />
@@ -220,7 +225,7 @@ function AIRobotNode({ unlocked, initialPosition, onLock }: { unlocked: boolean,
             <meshStandardMaterial color="#2a2a3a" metalness={0.9} roughness={0.2} />
             <mesh position={[0, 0.15, 0]}>
               <sphereGeometry args={[0.02]} />
-              <meshBasicMaterial color={unlocked ? (hovered ? "#ff3333" : "#3a7bd5") : "#e8c84a"} />
+              <meshBasicMaterial color={unlocked ? (hovered ? "#ff3333" : "#00ffcc") : "#e8c84a"} />
             </mesh>
           </mesh>
         </group>
@@ -231,26 +236,23 @@ function AIRobotNode({ unlocked, initialPosition, onLock }: { unlocked: boolean,
             <meshStandardMaterial color="#2a2a3a" metalness={0.9} roughness={0.2} />
             <mesh position={[0, 0.15, 0]}>
               <sphereGeometry args={[0.02]} />
-              <meshBasicMaterial color={unlocked ? (hovered ? "#ff3333" : "#3a7bd5") : "#e8c84a"} />
+              <meshBasicMaterial color={unlocked ? (hovered ? "#ff3333" : "#00ffcc") : "#e8c84a"} />
             </mesh>
           </mesh>
         </group>
 
-        {/* Neck connector */}
-        <mesh position={[0, -0.42, 0]}>
-          <cylinderGeometry args={[0.2, 0.15, 0.2, 32]} />
-          <meshStandardMaterial color="#1a1a1a" metalness={0.8} roughness={0.3} />
-        </mesh>
-        
-        {/* Neck Glow Ring */}
-        <mesh position={[0, -0.5, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.15, 0.015, 16, 64]} />
-          <meshBasicMaterial color={unlocked ? "#3a7bd5" : "#f5a623"} transparent opacity={0.8} />
-          <pointLight color={unlocked ? "#3a7bd5" : "#e8c84a"} intensity={1.5} distance={4} />
-        </mesh>
-
-        {/* === THE ROBOT BODY (Transforms purely upon unlock) === */}
-        <ProceduralBody unlocked={unlocked} />
+        {/* Retractable Neck System */}
+        <group ref={neckRef}>
+          <mesh position={[0, -0.42, 0]}>
+            <cylinderGeometry args={[0.2, 0.15, 0.2, 32]} />
+            <meshStandardMaterial color="#1a1a1a" metalness={0.8} roughness={0.3} />
+          </mesh>
+          <mesh position={[0, -0.5, 0]} rotation={[Math.PI / 2, 0, 0]}>
+            <torusGeometry args={[0.15, 0.015, 16, 64]} />
+            <meshBasicMaterial color={unlocked ? "#00ffcc" : "#f5a623"} transparent opacity={0.8} />
+            <pointLight color={unlocked ? "#00ffcc" : "#e8c84a"} intensity={1.5} distance={4} />
+          </mesh>
+        </group>
       </group>
     </group>
   );
@@ -268,15 +270,23 @@ function ContainmentCage({ position, scale, unlocked, onHit }: { position: [numb
   useFrame((state) => {
     const t = state.clock.elapsedTime;
     
+    const isClient = typeof window !== "undefined";
+    const scY = isClient ? window.scrollY : 0;
+    const vH = isClient ? window.innerHeight : 1000;
+    const scrollOffset = (scY / vH) * state.viewport.height;
+    
+    const currentAnchorY = position[1] + scrollOffset;
+    
     if (groupRef.current) {
       if (unlocked) {
         groupRef.current.scale.lerp(new THREE.Vector3(0, 0, 0), 0.15);
         groupRef.current.rotation.x += 0.05;
         groupRef.current.rotation.y += 0.05;
+        groupRef.current.position.y = currentAnchorY;
       } else {
         groupRef.current.scale.lerp(new THREE.Vector3(scale, scale, scale), 0.1);
         groupRef.current.rotation.y = t * 0.1;
-        groupRef.current.position.y = position[1] + Math.sin(t * 1.5) * 0.05;
+        groupRef.current.position.y = currentAnchorY + Math.sin(t * 1.5) * 0.05;
       }
     }
 
