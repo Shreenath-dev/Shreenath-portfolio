@@ -16,6 +16,43 @@
   --cream: #f0ead6;
   --amber: #f5a623;
   --gold: #e8c84a;
+
+  /* Semantic aliases */
+  --bg-primary: var(--charcoal);
+  --bg-secondary: var(--ink);
+  --bg-card: var(--ink);
+  --text-primary: var(--cream);
+  --text-secondary: var(--silver);
+  --text-muted: var(--ghost);
+  --text-faint: var(--muted);
+  --border-color: var(--border);
+  --accent: var(--amber);
+  --accent-alt: var(--gold);
+}
+
+/* ─── Light Theme ─── */
+[data-theme="light"] {
+  --charcoal: #f7f3ec;
+  --ink: #eee8db;
+  --surface: #e8e0d0;
+  --border: #d4c9b5;
+  --muted: #9a8f7e;
+  --ghost: #7a7060;
+  --silver: #3d3530;
+  --cream: #1a1208;
+  --amber: #c4780a;
+  --gold: #b8960a;
+
+  --bg-primary: #f7f3ec;
+  --bg-secondary: #eee8db;
+  --bg-card: #f0ead8;
+  --text-primary: #1a1208;
+  --text-secondary: #3d3530;
+  --text-muted: #7a7060;
+  --text-faint: #9a8f7e;
+  --border-color: #d4c9b5;
+  --accent: #c4780a;
+  --accent-alt: #b8960a;
 }
 
 * {
@@ -26,6 +63,7 @@
 
 html {
   scroll-behavior: smooth;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 body {
@@ -34,6 +72,7 @@ body {
   font-family: 'Geist', sans-serif;
   overflow-x: hidden;
   cursor: none;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* Custom cursor */
@@ -119,3 +158,63 @@ body::before {
 .delay-300 { transition-delay: 0.3s; }
 .delay-400 { transition-delay: 0.4s; }
 .delay-500 { transition-delay: 0.5s; }
+
+/* ─── Light Theme: Override hardcoded Tailwind hex values ─── */
+
+/* Backgrounds */
+[data-theme="light"] .bg-\[\#0e0e0e\],
+[data-theme="light"] .bg-\[\#0e0e0ecc\],
+[data-theme="light"] .bg-\[\#0a0a0a\] { background-color: #f0ead8 !important; }
+[data-theme="light"] .bg-\[\#161616\] { background-color: #e8e0ce !important; }
+[data-theme="light"] .bg-\[\#1e1e1e\] { background-color: #e0d8c6 !important; }
+[data-theme="light"] .bg-\[\#2a2a2a\] { background-color: #d4c9b5 !important; }
+[data-theme="light"] .bg-\[\#f5a623\], [data-theme="light"] .bg-\[\#f5a623\]:hover { background-color: #c4780a !important; }
+[data-theme="light"] .bg-\[\#e8c84a\] { background-color: #b8960a !important; }
+[data-theme="light"] .bg-\[\#f5a62315\] { background-color: #c4780a20 !important; }
+
+/* Text colors */
+[data-theme="light"] .text-\[\#f0ead6\] { color: #1a1208 !important; }
+[data-theme="light"] .text-\[\#c8c8c8\] { color: #3d3530 !important; }
+[data-theme="light"] .text-\[\#888\],
+[data-theme="light"] .text-\[\#888888\] { color: #7a7060 !important; }
+[data-theme="light"] .text-\[\#555\],
+[data-theme="light"] .text-\[\#555555\] { color: #9a8f7e !important; }
+[data-theme="light"] .text-\[\#f5a623\] { color: #c4780a !important; }
+[data-theme="light"] .text-\[\#0e0e0e\] { color: #f7f3ec !important; }
+
+/* Border colors */
+[data-theme="light"] .border-\[\#2a2a2a\] { border-color: #d4c9b5 !important; }
+[data-theme="light"] .border-\[\#f5a623\] { border-color: #c4780a !important; }
+
+/* Hover overrides — Navbar scrolled bg */
+[data-theme="light"] nav.\!bg-\[\#0e0e0ecc\] { background-color: rgba(247,243,236,0.95) !important; }
+
+/* Navbar scrolled background (inline style targets don't change; use specificity) */
+[data-theme="light"] nav[style*="#0e0e0e"] { background-color: rgba(247,243,236,0.95) !important; }
+
+/* Grain overlay — lighter in light mode */
+[data-theme="light"] body::before { opacity: 0.12; }
+
+/* Selection colors */
+[data-theme="light"] ::selection { background: #c4780a; color: #f7f3ec; }
+
+/* Scrollbar */
+[data-theme="light"] ::-webkit-scrollbar-track { background: #f7f3ec; }
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: #d4c9b5; }
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #c4780a; }
+
+/* Theme toggle button transition */
+.theme-toggle {
+  transition: all 0.3s ease;
+}
+
+/* Navbar scrolled — theme-aware */
+.navbar-scrolled {
+  background-color: rgba(14, 14, 14, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+[data-theme="light"] .navbar-scrolled {
+  background-color: rgba(247, 243, 236, 0.92) !important;
+}
