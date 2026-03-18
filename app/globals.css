@@ -218,3 +218,11 @@ body::before {
 [data-theme="light"] .navbar-scrolled {
   background-color: rgba(247, 243, 236, 0.92) !important;
 }
+
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
