@@ -1,52 +1,6 @@
+import Link from "next/link";
 import RevealObserver from "./RevealObserver";
-
-const projects = [
-  {
-    num: "01",
-    name: "CampaignFlow",
-    tagline: "AI Sales Automation",
-    year: "2025",
-    description:
-      "Microservices-based architecture for autonomous sales task execution. Leverages async programming to handle high-volume, complex workflows with real-time processing.",
-    highlights: [
-      "Designed microservices architecture for autonomous task execution",
-      "Optimized MySQL schema with composite indexes — 15–30% read query improvement",
-      "Asynchronous programming for high-volume workflow handling",
-    ],
-    stack: ["React", "Node.js", "Python", "MySQL"],
-    color: "#f5a623",
-  },
-  {
-    num: "02",
-    name: "MedMatch",
-    tagline: "A Social Media Platform for Medminds",
-    year: "2025",
-    description:
-      "Full-stack production web app with GenAI workflows and a recommendation engine. Implements secure API practices including request validation and access control.",
-    highlights: [
-      "Integrated GenAI workflows and real-time recommendation engine",
-      "Secure API: request validation, access control, structured logging",
-      "Microservices architecture with MERN stack",
-    ],
-    stack: ["MERN", "GenAI", "Microservices"],
-    color: "#e8c84a",
-  },
-  {
-    num: "03",
-    name: "Defacement Detector",
-    tagline: "Website Integrity Monitor",
-    year: "Jun–Jul 2024",
-    description:
-      "Real-time monitoring system to detect structural website changes using OCR and CNN. Fault-tolerant design ensures continuous system integrity under adverse conditions.",
-    highlights: [
-      "Real-time structural change detection via OCR + CNN",
-      "Fault-tolerant monitoring with automated alerting",
-      "Python-based pipeline with robust error handling",
-    ],
-    stack: ["Python", "OCR", "CNN"],
-    color: "#c8c8c8",
-  },
-];
+import { projects } from "@/lib/projects-data";
 
 export default function Projects() {
   return (
@@ -81,7 +35,6 @@ export default function Projects() {
                   <p className="font-mono text-sm text-[#f5a623] mb-4">{p.tagline}</p>
                   <p className="text-[#888] text-sm leading-relaxed">{p.description}</p>
 
-                  {/* Stack tags */}
                   <div className="flex flex-wrap gap-2 mt-6">
                     {p.stack.map((s) => (
                       <span
@@ -117,6 +70,31 @@ export default function Projects() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* View All Projects CTA */}
+        <div className="reveal mt-12 flex justify-center">
+          <Link
+            href="/projects"
+            className="group relative inline-flex items-center gap-3 font-mono text-xs tracking-widest uppercase border border-[#2a2a2a] hover:border-[#f5a623] text-[#888] hover:text-[#f5a623] px-8 py-4 transition-all duration-300 overflow-hidden"
+          >
+            {/* Hover fill */}
+            <span className="absolute inset-0 bg-[#f5a623] opacity-0 group-hover:opacity-5 transition-opacity duration-300" />
+            <span>View all projects</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </Link>
         </div>
       </div>
     </section>

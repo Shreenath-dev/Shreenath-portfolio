@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import ThemeProvider from "@/components/ThemeProvider";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 
 const BASE_URL = "https://shreenathsubramanian.me";
@@ -117,6 +118,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
           strategy="afterInteractive"
         />
+        <GoogleAnalytics gaId="G-MF9PTPM0V9" />
       </body>
     </html>
   );
