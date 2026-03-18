@@ -2,15 +2,33 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { projects } from "@/lib/projects-data";
+import { projects, type ProjectCategory } from "@/lib/projects-data";
+
+type Filter = "all" | ProjectCategory;
+
+const filters: { label: string; value: Filter; icon: string }[] = [
+  { label: "All", value: "all", icon: "◈" },
+  { label: "Production", value: "production", icon: "▣" },
+  { label: "Personal", value: "personal", icon: "△" },
+];
 import Cursor from "@/components/Cursor";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export default function ProjectsPage() {
   const [expanded, setExpanded] = useState<number | null>(null);
+  const [activeFilter, setActiveFilter] = useState<Filter>("all");
 
   const toggle = (i: number) => setExpanded(expanded === i ? null : i);
+
+  const filtered = activeFilter === "all"
+    ? projects
+    : projects.filter((p) => p.category === activeFilter);
+
+  const handleFilter = (f: Filter) => {
+    setActiveFilter(f);
+    setExpanded(null);
+  };
 
   return (
     <>
@@ -55,12 +73,56 @@ export default function ProjectsPage() {
             </p>
           </div>
 
-          {/* Divider */}
-          <div className="w-full h-px bg-[#2a2a2a] mt-10 mb-12" />
+          {/* ─── Category Tab Switch ─── */}
+          <div className="mt-10 mb-12">
+            <div className="inline-flex border-b border-[#2a2a2a]">
+              {filters.map((f) => {
+                const isActive = activeFilter === f.value;
+                const count = f.value === "all"
+                  ? projects.length
+                  : projects.filter((p) => p.category === f.value).length;
+                return (
+                  <button
+                    key={f.value}
+                    id={`filter-${f.value}`}
+                    onClick={() => handleFilter(f.value)}
+                    className={`relative font-mono text-xs tracking-widest uppercase px-6 py-3.5 transition-all duration-300 flex items-center gap-2.5 ${
+                      isActive
+                        ? "text-[#f5a623]"
+                        : "text-[#555] hover:text-[#888]"
+                    }`}
+                  >
+                    {/* Sliding bottom indicator */}
+                    <span
+                      className={`absolute bottom-0 left-0 right-0 h-[2px] bg-[#f5a623] transition-all duration-300 ${
+                        isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
+                      }`}
+                    />
+                    {/* Active glow */}
+                    <span
+                      className={`absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-[#f5a62310] to-transparent transition-opacity duration-300 ${
+                        isActive ? "opacity-100" : "opacity-0"
+                      }`}
+                    />
+                    <span className="relative text-[10px]">{f.icon}</span>
+                    <span className="relative">{f.label}</span>
+                    <span
+                      className={`relative font-mono text-[10px] px-1.5 py-0.5 rounded-sm transition-all duration-300 ${
+                        isActive
+                          ? "bg-[#f5a62318] text-[#f5a623]"
+                          : "bg-[#ffffff06] text-[#444]"
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
-          {/* Project list */}
           <div className="space-y-4">
-            {projects.map((p, i) => {
+            {filtered.map((p, i) => {
               const isOpen = expanded === i;
               return (
                 <div

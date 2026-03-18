@@ -1,8 +1,11 @@
+export type ProjectCategory = "production" | "personal";
+
 export type Project = {
   num: string;
   name: string;
   tagline: string;
   year: string;
+  category: ProjectCategory;
   description: string;
   highlights: string[];
   stack: string[];
@@ -19,7 +22,8 @@ export const projects: Project[] = [
     num: "01",
     name: "CampaignFlow",
     tagline: "AI Sales Automation",
-    year: "2025",
+    year: "2026",
+    category: "production",
     description:
       "Microservices-based architecture for autonomous sales task execution. Leverages async programming to handle high-volume, complex workflows with real-time processing.",
     longDescription:
@@ -45,6 +49,7 @@ export const projects: Project[] = [
     name: "MedMatch",
     tagline: "A Social Media Platform for Medminds",
     year: "2025",
+    category: "production",
     description:
       "Full-stack production web app with GenAI workflows and a recommendation engine. Implements secure API practices including request validation and access control.",
     longDescription:
@@ -66,10 +71,11 @@ export const projects: Project[] = [
     github: "https://github.com/shreenath-dev",
   },
   {
-    num: "03",
+    num: "01",
     name: "Defacement Detector",
     tagline: "Website Integrity Monitor",
     year: "Jun–Jul 2024",
+    category: "personal",
     description:
       "Real-time monitoring system to detect structural website changes using OCR and CNN. Fault-tolerant design ensures continuous system integrity under adverse conditions.",
     longDescription:

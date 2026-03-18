@@ -103,10 +103,11 @@ export default function Hero() {
         {/* Stats row */}
         <div className="flex flex-wrap gap-12 mt-20 pt-10 border-t border-[#2a2a2a] animate-[fade-up_0.7s_ease_0.65s_both]">
           {[
-            { num: "3+", label: "Projects Shipped" },
-            { num: "2", label: "Internships" },
             { num: "8.1", label: "CGPA" },
             { num: "5+", label: "Certifications" },
+            { num: "3+", label: "Projects Shipped" },
+            { num: "3", label: "Internships" },
+            { num: "1.6", label: "Years of Experience" },
           ].map((s) => (
             <div key={s.label}>
               <div className="font-display text-4xl text-[#f5a623]">{s.num}</div>
@@ -115,12 +116,12 @@ export default function Hero() {
           ))}
         </div>
       </div>
-
+      {/* <div className="h-14"></div> */}
       {/* Scroll hint */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-[fade-in_1s_ease_1.2s_both]">
+      {/* <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex mt-40 flex-col items-center gap-2 animate-[fade-in_1s_ease_1.2s_both]">
         <span className="font-mono text-[10px] tracking-[0.3em] text-[#555] uppercase">Scroll</span>
         <div className="w-px h-10 bg-gradient-to-b from-[#f5a623] to-transparent animate-[float_2s_ease-in-out_infinite]" />
-      </div>
+      </div> */}
     </section>
   );
 }
