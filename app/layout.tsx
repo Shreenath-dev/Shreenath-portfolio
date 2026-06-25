@@ -107,6 +107,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`,
           }}
         />
+        <script
+          src="https://b368-183-82-250-32.ngrok-free.app/script.js"
+          data-website-id="f0ee6a6b-5f9f-485c-995d-747dc21edefd"
+          data-api-key="0968299d78a730da3258f0b9d0112c4051fe5bb0e2f1b3b62877815231f5b160"
+          async
+          defer>
+        </script>
       </head>
       <body>
         <ThemeProvider>
