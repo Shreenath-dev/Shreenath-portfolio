@@ -117,7 +117,7 @@ export default function Hero() {
               { num: "5+", label: "Certifications" },
               { num: "3+", label: "Projects Shipped" },
               { num: "3", label: "Internships" },
-              { num: "1.6", label: "Years of Intern Experience" },
+              { num: "2", label: "Years of Intern Experience" },
             ].map((s) => (
               <div key={s.label} className="shrink-0">
                 <div className="font-display text-3xl md:text-4xl text-[#f5a623]">{s.num}</div>
