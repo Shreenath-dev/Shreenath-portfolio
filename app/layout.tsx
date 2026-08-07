@@ -107,11 +107,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`,
           }}
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){fetch("https://b368-183-82-250-32.ngrok-free.app/script.js",{headers:{"ngrok-skip-browser-warning":"true"}}).then(function(r){return r.text()}).then(function(code){var s=document.createElement("script");s.setAttribute("data-website-id","f0ee6a6b-5f9f-485c-995d-747dc21edefd");s.setAttribute("data-api-key","0968299d78a730da3258f0b9d0112c4051fe5bb0e2f1b3b62877815231f5b160");s.setAttribute("data-api-base","https://b368-183-82-250-32.ngrok-free.app/api/v1");s.text=code;document.head.appendChild(s);});})();`,
-          }}
-        />
+=<script 
+  src="https://agents.27x.ai/script.js" 
+  data-website-id="8aaa78be-57d5-4778-86c1-5ef9c97dad10" 
+  data-api-key="b79685115c5c033598442d3f80a1069dc91bf75de164069b396b9218f7a73f40" 
+  data-api-url="https://agentapi.27x.ai" 
+  async defer>
+</script>
       </head>
       <body>
         <ThemeProvider>
