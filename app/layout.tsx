@@ -107,13 +107,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`,
           }}
         />
-=<script 
-  src="https://agents.27x.ai/script.js" 
-  data-website-id="8aaa78be-57d5-4778-86c1-5ef9c97dad10" 
-  data-api-key="b79685115c5c033598442d3f80a1069dc91bf75de164069b396b9218f7a73f40" 
-  data-api-url="https://agentapi.27x.ai" 
-  async defer>
-</script>
+        <script 
+          src="https://agents.27x.ai/script.js" 
+          data-website-id="8aaa78be-57d5-4778-86c1-5ef9c97dad10" 
+          data-api-key="b79685115c5c033598442d3f80a1069dc91bf75de164069b396b9218f7a73f40" 
+          data-api-url="https://agentapi.27x.ai" 
+          async defer>
+        </script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(ss,ex){ window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));}; (function(d,s){ fs=d.getElementsByTagName(s)[0]; function ce(src){ var cs=d.createElement(s); cs.src=src; cs.async=1; fs.parentNode.insertBefore(cs,fs); }; ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js'); })(document,'script'); })('Xbp1oaE0WQk4EdVj');`,
+          }}
+        />
       </head>
       <body>
         <ThemeProvider>
